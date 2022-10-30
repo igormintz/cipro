@@ -11,7 +11,7 @@ csv_paths= {
 ```
 # The Algorithm
 The model an ensemble of LASSO penalized logistic regression, random forest, gradient-boosted trees , and a simple neural network, stacked as described in [Van der Laan, M. J., Polley, E. C., & Hubbard, A. E. (2007). Super learner. Statistical applications in genetics and molecular biology, 6(1).](https://www.degruyter.com/document/doi/10.2202/1544-6115.1309/html)
-The code contains a workaround of an issue with other ensemble packages that can't deal with time series split (while cross validating to create the z_matrix the number of predictions is smaller than the whole data set because the first fold is used for training only). More over, the code plots calibration plot, SHAPley values, and net benefit plots, and saves a csv file with results.
+The code contains a workaround of an issue with other ensemble packages that can't deal with time series split (while cross validating to create the z_matrix the number of predictions is smaller than the whole data set because the first fold is used for training only). More over, the code plots AUC-ROC, calibration plot, SHAPley values, and net benefit plots, and saves a csv file with results.
 
 # Python Dependencies
 described in a requirements.txt file
