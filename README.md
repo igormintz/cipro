@@ -19,3 +19,6 @@ described in a requirements.txt file
 # Usage
 After updating the csv path to the data, just run:
 `python main.py`
+
+# Licens
+MIT License
