@@ -15,3 +15,7 @@ The code contains a workaround of an issue with other ensemble packages that can
 
 # Python Dependencies
 described in a requirements.txt file
+
+# Usage
+After updating the csv path to the data, just run:
+`python main.py`
