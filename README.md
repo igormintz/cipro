@@ -5,7 +5,7 @@ This code was written as part of a research on antimicrobial resistance. [link t
 
 Data are proprietary but can be made available upon reasonable request from the authors.
 
-The input data is csv fileד paths with numerical features. I used 2 version: bactria gnostic and bacteria agnostic.
+The input data are csv files paths with numerical features. I used 2 version: bactria gnostic and bacteria agnostic.
 ```
 csv_paths= {
             'Agnostic': get_script_dir() / 'agnostics_22_06_22.csv',
