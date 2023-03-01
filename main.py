@@ -352,7 +352,7 @@ class EnsembleSingleAnti:
                 features.append(col)
         X = X[features]
         y = self.df['Resistance']
-        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=0.25)
+        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=0.25, shuffle=False, random_state=42)
         # keep column names befor standartizimg
         self.col_names = self.X_train.columns
 
