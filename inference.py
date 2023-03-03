@@ -32,6 +32,7 @@ def load_models(out_path: Path, name: str, model_names: list) -> dict:
 def make_predictions(models: dict, X_test: pd.DataFrame, y_test) -> pd.DataFrame:
     predictions = {}
     for model_name, model in models.items():
+        print(model_name, model)
         if model_name == "NN":
             predictions[f"{model_name}"] = model.predict(X_test.values).flatten()
         elif model_name != "ensemble":
@@ -78,7 +79,7 @@ def calc_sn_sp_acc_ppv(pred_df: pd.DataFrame) -> dict:
     return sn_sp_acc_ppv
 
 
-def save_summary(predictions: pd.DataFrame, name: str, out_path: Path) -> None:
+def save_summary(predictions: pd.DataFrame, name: str, models: dict, out_path: Path) -> None:
     aucs = {}
     ensemble_auc_ci = get_auc_ci(predictions)
     ensemble_sn_sp_acc_ppv = calc_sn_sp_acc_ppv(predictions)
@@ -92,6 +93,14 @@ def save_summary(predictions: pd.DataFrame, name: str, out_path: Path) -> None:
         f.write(f"ensemble specificity: {ensemble_sn_sp_acc_ppv['specificity']}\n")
         f.write(f"ensemble accuracy: {ensemble_sn_sp_acc_ppv['accuracy']}\n")
         f.write(f"ensemble PPV: {ensemble_sn_sp_acc_ppv['ppv']}\n")
+        for model_name, model in models.items():
+            f.write(f"{model_name}:\n")
+            if model_name == "NN":
+                f.write(f"{model.summary()}\n")
+            elif model_name == "ensemble":
+                f.write(f"coefs: {model.coef_}, intercept: {model.intercept_}\n")
+            else:
+                f.write(f"{model.get_params()}\n")
 
 
 if "__main__" == __name__:
@@ -112,4 +121,4 @@ if "__main__" == __name__:
         plot_roc(predictions, name, out_path)
         plot_calibration(predictions, name, out_path)
         plot_desicion_curve(predictions, name, out_path)
-        save_summary(predictions, name, out_path)
+        save_summary(predictions, name, models, out_path)

@@ -153,7 +153,14 @@ class EnsembleSingleAnti:
                 verbose=False,
             )
             # predict
-            fold_pred = self.clfs[model].predict(scaled_X_test)
+            try:
+                fold_pred = self.clfs[model].predict(scaled_X_test)
+            except KeyboardInterrupt:
+                print("Keyboard interrupt")
+            except Exception as e:
+                print("Exception encountered:", e)
+                print("n_iter:", _iter)
+                print("params:", params["NN"][_iter])
             fold_pred = np.concatenate(fold_pred).ravel().tolist()
             # calculate AUC
             auc_score = roc_auc_score(fold_y_test, fold_pred)
@@ -293,7 +300,6 @@ class EnsembleSingleAnti:
             print("model:", model)
             # iterate over folds
             for fold_n, (train_index, test_index) in enumerate(tscv.split(self.X_train)):
-                # print(' fold:', fold_n)
                 # selecting X and y train and test, scaling
                 scaled_X_train, fold_y_train, scaled_X_test, fold_y_test = get_transformed_X_y(
                     train_index, test_index, self.X_train, self.y_train
@@ -435,7 +441,7 @@ if "__main__" == __name__:
     for name, csv_path in csv_paths.items():
         print(name)
         df = get_data(csv_path)
-        by_bac = EnsembleSingleAnti(name, df, out_path, n_iter=300)
+        by_bac = EnsembleSingleAnti(name, df, out_path, n_iter=20)
 
     print("**********************")
     print("models and ensemble saved!!!")
