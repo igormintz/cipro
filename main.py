@@ -5,7 +5,6 @@ import pickle
 import warnings
 from pathlib import Path
 
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
@@ -13,12 +12,10 @@ import pandas as pd
 import scipy.stats as st
 import tensorflow as tf
 
-# from sklearn.ensemble import GradientBoostingClassifier
 import xgboost as xgb
 from keras import layers
 from keras.layers import BatchNormalization, Dropout
 from keras.optimizers import adam_v2
-from plots import plot_calibration, plot_desicion_curve, plot_roc
 from sklearn.ensemble import RandomForestClassifier
 
 # models
@@ -30,7 +27,6 @@ from sklearn.model_selection import RandomizedSearchCV, TimeSeriesSplit
 from tensorflow import keras
 from tqdm import tqdm
 from utils import get_data, get_random_parameters, get_transformed_X_y, split_and_scale
-from xgboost import plot_tree
 
 warnings.filterwarnings("ignore")
 

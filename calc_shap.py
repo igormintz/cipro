@@ -1,5 +1,7 @@
 from multiprocessing import Manager, Pool
 from pathlib import Path
+import tensorflow as tf
+import random
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -12,6 +14,14 @@ from utils import get_data, split_and_scale
 plt.rcParams["savefig.dpi"] = 600
 plt.rcParams.update({"font.size": 16})
 import shap
+
+random_state = 42
+np.random.seed(seed=random_state)
+import os
+
+os.environ["PYTHONHASHSEED"] = "0"
+random.seed(random_state)
+tf.random.set_seed(random_state)
 
 model_names = ["NN", "l1", "RF", "XGBoost", "ensemble"]
 
@@ -30,8 +40,9 @@ def calc_shap_values(
     # '''Fixed by removing link="logit" and wrapping shap.force_plot(float(explainer.expected_value[0]), shap_values[0][0,:], X_test.iloc[0,:], link="logit")`'''
     print("calculating shap values...")
     X_train = pd.DataFrame(X_train, columns=col_names)
-    explainer = shap.KernelExplainer(f, X_train.iloc[0:20])
-    shap_values = explainer.shap_values(X_test, nsamples=100)
+
+    explainer = shap.KernelExplainer(f, X_train.sample(500, random_state=random_state))
+    shap_values = explainer.shap_values(X_test, nsamples=300)
     pd.DataFrame(shap_values[1], columns=col_names).to_csv(out_path / name / "shap_table.csv")
 
     print("plotting and saving")

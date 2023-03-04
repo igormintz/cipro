@@ -31,9 +31,8 @@ def load_models(out_path: Path, name: str, model_names: list) -> dict:
 def make_predictions(models: dict, X_test: pd.DataFrame, y_test) -> pd.DataFrame:
     predictions = {}
     for model_name, model in models.items():
-        print(model_name, model)
         if model_name == "NN":
-            predictions[f"{model_name}"] = model.predict(X_test.values).flatten()
+            predictions[f"{model_name}"] = model.predict(X_test).flatten()
         elif model_name != "ensemble":
             predictions[f"{model_name}"] = model.predict_proba(X_test)[:, 1]
     predictions = pd.DataFrame(predictions)
