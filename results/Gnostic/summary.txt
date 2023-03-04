@@ -1,0 +1,16 @@
+AUCs: {'NN': 0.8202657148096573, 'l1': 0.835258107403396, 'RF': 0.8118524392410359, 'XGBoost': 0.8317685142205489, 'ensemble': 0.8370306617154057}
+ensemble AUC CI: (0.820697076876159, 0.8541465398891543)
+ensemble sensitivity: 0.5495169082125604
+ensemble specificity: 0.9317912218268091
+ensemble accuracy: 0.8058870326173428
+ensemble PPV: 0.7982456140350878
+NN:
+None
+l1:
+{'C': 0.19554498484881097, 'class_weight': None, 'dual': False, 'fit_intercept': True, 'intercept_scaling': 1, 'l1_ratio': None, 'max_iter': 10000, 'multi_class': 'auto', 'n_jobs': None, 'penalty': 'l1', 'random_state': None, 'solver': 'saga', 'tol': 0.0001, 'verbose': 0, 'warm_start': False}
+RF:
+{'bootstrap': True, 'ccp_alpha': 0.0, 'class_weight': None, 'criterion': 'gini', 'max_depth': 10, 'max_features': 0.4601277579239581, 'max_leaf_nodes': None, 'max_samples': None, 'min_impurity_decrease': 0.0, 'min_samples_leaf': 1, 'min_samples_split': 0.14934743307283013, 'min_weight_fraction_leaf': 0.0, 'n_estimators': 542, 'n_jobs': None, 'oob_score': False, 'random_state': None, 'verbose': 0, 'warm_start': False}
+XGBoost:
+{'objective': 'binary:logistic', 'use_label_encoder': None, 'base_score': None, 'booster': None, 'callbacks': None, 'colsample_bylevel': None, 'colsample_bynode': None, 'colsample_bytree': 0.9236331419665211, 'early_stopping_rounds': None, 'enable_categorical': False, 'eval_metric': None, 'feature_types': None, 'gamma': 7.997820220742694, 'gpu_id': None, 'grow_policy': None, 'importance_type': None, 'interaction_constraints': None, 'learning_rate': 0.20713832943910646, 'max_bin': None, 'max_cat_threshold': None, 'max_cat_to_onehot': None, 'max_delta_step': None, 'max_depth': 4, 'max_leaves': None, 'min_child_weight': 1.8617170928836084, 'missing': nan, 'monotone_constraints': None, 'n_estimators': 335, 'n_jobs': None, 'num_parallel_tree': None, 'predictor': None, 'random_state': None, 'reg_alpha': None, 'reg_lambda': None, 'sampling_method': None, 'scale_pos_weight': 1, 'subsample': 0.9897928490914578, 'tree_method': None, 'validate_parameters': None, 'verbosity': None, 'num_class': 1}
+ensemble:
+coefs: [[0.31827854 4.00665703 1.26507326 1.56385058]], intercept: [-3.0589421]
