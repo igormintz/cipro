@@ -11,26 +11,26 @@ import pandas as pd
 
 # other
 import scipy.stats as st
+import tensorflow as tf
 
 # from sklearn.ensemble import GradientBoostingClassifier
 import xgboost as xgb
 from keras import layers
 from keras.layers import BatchNormalization, Dropout
 from keras.optimizers import adam_v2
+from plots import plot_calibration, plot_desicion_curve, plot_roc
 from sklearn.ensemble import RandomForestClassifier
 
 # models
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import roc_auc_score, roc_curve
+from sklearn.metrics import roc_auc_score
 
 # tuning
 from sklearn.model_selection import RandomizedSearchCV, TimeSeriesSplit
 from tensorflow import keras
-from xgboost import plot_tree
-
-from plots import plot_calibration, plot_desicion_curve, plot_roc
+from tqdm import tqdm
 from utils import get_data, get_random_parameters, get_transformed_X_y, split_and_scale
-import tensorflow as tf
+from xgboost import plot_tree
 
 warnings.filterwarnings("ignore")
 
@@ -66,11 +66,7 @@ class EnsembleSingleAnti:
         self.name = name
         self.df = df
         self.out_path = out_path
-        self.X_train = None
-        self.X_test = None
-        self.y_train = None
-        self.y_test = None
-        self.col_names = None
+        self.X_train, self.X_test, self.y_train, self.y_test, self.col_names = split_and_scale(df)
         #  create a dictionary of algorithms
         self.clfs = {
             "NN": None,
@@ -95,7 +91,6 @@ class EnsembleSingleAnti:
         else:
             self.create_z_matrix()
         self.train_meta_learner()
-        print(self.X_train.shape)
         self.train_all_models()
         self.save_models()
 
@@ -153,14 +148,7 @@ class EnsembleSingleAnti:
                 verbose=False,
             )
             # predict
-            try:
-                fold_pred = self.clfs[model].predict(scaled_X_test)
-            except KeyboardInterrupt:
-                print("Keyboard interrupt")
-            except Exception as e:
-                print("Exception encountered:", e)
-                print("n_iter:", _iter)
-                print("params:", params["NN"][_iter])
+            fold_pred = self.clfs[model].predict(scaled_X_test)
             fold_pred = np.concatenate(fold_pred).ravel().tolist()
             # calculate AUC
             auc_score = roc_auc_score(fold_y_test, fold_pred)
@@ -177,7 +165,7 @@ class EnsembleSingleAnti:
             # fit model
             self.clfs[model].fit(scaled_X_train, fold_y_train, eval_metric="auc")
             # predict
-            fold_pred = self.clfs[model].predict(scaled_X_test)
+            fold_pred = self.clfs[model].predict_proba(scaled_X_test)[::, 1]
             # calculate AUC
             auc_score = roc_auc_score(fold_y_test, fold_pred)
             # save results on next line
@@ -193,7 +181,7 @@ class EnsembleSingleAnti:
             # fit model
             self.clfs[model].fit(scaled_X_train, fold_y_train)
             # predict
-            fold_pred = self.clfs[model].predict(scaled_X_test)
+            fold_pred = self.clfs[model].predict_proba(scaled_X_test)[:, 1]
             # calculate AUC
             auc_score = roc_auc_score(fold_y_test, fold_pred)
             # save results on next line
@@ -289,7 +277,6 @@ class EnsembleSingleAnti:
         """
 
         print('creating a "z-matrix"')
-        self.X_train, self.X_test, self.y_train, self.y_test, self.col_names = split_and_scale(self.df)
         # get random parameters (for manual random search)
         params = get_random_parameters(self.name, out_path=self.out_path, n_iter=self.n_iter)
         tscv = TimeSeriesSplit(n_splits=3)
@@ -305,7 +292,7 @@ class EnsembleSingleAnti:
                     train_index, test_index, self.X_train, self.y_train
                 )
                 # iterate over random search parameters
-                for _iter in range(self.n_iter):
+                for _iter in tqdm(range(self.n_iter)):
                     self.random_search(
                         model, fold_n, _iter, scaled_X_train, fold_y_train, scaled_X_test, fold_y_test, params
                     )
@@ -441,7 +428,7 @@ if "__main__" == __name__:
     for name, csv_path in csv_paths.items():
         print(name)
         df = get_data(csv_path)
-        by_bac = EnsembleSingleAnti(name, df, out_path, n_iter=20)
+        by_bac = EnsembleSingleAnti(name, df, out_path, n_iter=100)
 
     print("**********************")
     print("models and ensemble saved!!!")

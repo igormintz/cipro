@@ -5,12 +5,11 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import tensorflow as tf
 from keras.models import load_model
-from tensorflow import keras
-
 from main import get_script_dir
 from plots import *
-from utils import get_data, split_and_scale
 from sklearn.metrics import roc_auc_score
+from tensorflow import keras
+from utils import get_data, split_and_scale
 
 plt.rcParams["savefig.dpi"] = 600
 plt.rcParams.update({"font.size": 16})
@@ -114,7 +113,7 @@ if "__main__" == __name__:
         print(name)
         df = get_data(csv_path)
         X_train, X_test, y_train, y_test, col_names = split_and_scale(df)
-        X_test = pd.DataFrame(X_test, columns=col_names)
+        # X_test = pd.DataFrame(X_test, columns=col_names)
         models = load_models(out_path, name, model_names)
         predictions = make_predictions(models, X_test, y_test)
         predictions.to_csv(out_path / name / "predictions.csv")
