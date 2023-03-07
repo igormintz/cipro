@@ -275,7 +275,7 @@ class EnsembleSingleAnti:
         print('creating a "z-matrix"')
         # get random parameters (for manual random search)
         params = get_random_parameters(self.name, out_path=self.out_path, n_iter=self.n_iter)
-        tscv = TimeSeriesSplit(n_splits=3)
+        tscv = TimeSeriesSplit(n_splits=5)
         true_extend_count = 0
         # iterate over models to find best hyper parameters by random
         print("Iterating over models...")
