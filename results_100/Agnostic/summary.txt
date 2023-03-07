@@ -1,0 +1,33 @@
+AUCs: {'NN': 0.7163372272938264, 'l1': 0.7355462862677005, 'RF': 0.7191549045564208, 'XGBoost': 0.729462868407631, 'ensemble': 0.7367744310920854}
+ensemble AUC CI: (0.7145878313871045, 0.7575094285185817)
+ensemble sensitivity: 0.357487922705314
+ensemble specificity: 0.9157769869513642
+ensemble accuracy: 0.7319013524264121
+ensemble PPV: 0.6757990867579908
+NN:
+{"class_name": "Sequential", "config": {"name": "sequential_303", "layers": [{"class_name": "InputLayer", "config": {"batch_input_shape": [null, 104], "dtype": "float32", "sparse": false, "ragged": false, "name": "dense_779_input"}}, {"class_name": "Dense", "config": {"name": "dense_779", "trainable": true, "batch_input_shape": [null, 104], "dtype": "float32", "units": 37, "activation": "hard_sigmoid", "use_bias": true, "kernel_initializer": {"class_name": "RandomNormal", "config": {"mean": 0.0, "stddev": 0.05, "seed": 42}}, "bias_initializer": {"class_name": "Constant", "config": {"value": 0.1}}, "kernel_regularizer": null, "bias_regularizer": null, "activity_regularizer": null, "kernel_constraint": null, "bias_constraint": null}}, {"class_name": "BatchNormalization", "config": {"name": "batch_normalization_303", "trainable": true, "dtype": "float32", "axis": [1], "momentum": 0.99, "epsilon": 0.001, "center": true, "scale": true, "beta_initializer": {"class_name": "Zeros", "config": {}}, "gamma_initializer": {"class_name": "Ones", "config": {}}, "moving_mean_initializer": {"class_name": "Zeros", "config": {}}, "moving_variance_initializer": {"class_name": "Ones", "config": {}}, "beta_regularizer": null, "gamma_regularizer": null, "beta_constraint": null, "gamma_constraint": null}}, {"class_name": "Dropout", "config": {"name": "dropout_476", "trainable": true, "dtype": "float32", "rate": 0.40889790771866297, "noise_shape": null, "seed": null}}, {"class_name": "Dense", "config": {"name": "dense_780", "trainable": true, "dtype": "float32", "units": 1, "activation": "sigmoid", "use_bias": true, "kernel_initializer": {"class_name": "RandomNormal", "config": {"mean": 0.0, "stddev": 0.05, "seed": 42}}, "bias_initializer": {"class_name": "Constant", "config": {"value": 0.1}}, "kernel_regularizer": null, "bias_regularizer": null, "activity_regularizer": null, "kernel_constraint": null, "bias_constraint": null}}]}, "keras_version": "2.9.0", "backend": "tensorflow"}Model: "sequential_303"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ dense_779 (Dense)           (None, 37)                3885      
+                                                                 
+ batch_normalization_303 (Ba  (None, 37)               148       
+ tchNormalization)                                               
+                                                                 
+ dropout_476 (Dropout)       (None, 37)                0         
+                                                                 
+ dense_780 (Dense)           (None, 1)                 38        
+                                                                 
+=================================================================
+Total params: 4,071
+Trainable params: 3,997
+Non-trainable params: 74
+_________________________________________________________________
+l1:
+{'C': 0.06697116653436029, 'class_weight': None, 'dual': False, 'fit_intercept': True, 'intercept_scaling': 1, 'l1_ratio': None, 'max_iter': 10000, 'multi_class': 'auto', 'n_jobs': None, 'penalty': 'l1', 'random_state': 2738, 'solver': 'saga', 'tol': 0.0001, 'verbose': 0, 'warm_start': False}
+RF:
+{'bootstrap': True, 'ccp_alpha': 0.0, 'class_weight': None, 'criterion': 'gini', 'max_depth': 11, 'max_features': 0.5177364490523627, 'max_leaf_nodes': None, 'max_samples': None, 'min_impurity_decrease': 0.0, 'min_samples_leaf': 1, 'min_samples_split': 0.17069618607696974, 'min_weight_fraction_leaf': 0.0, 'n_estimators': 443, 'n_jobs': None, 'oob_score': False, 'random_state': 2738, 'verbose': 0, 'warm_start': False}
+XGBoost:
+{'objective': 'binary:logistic', 'use_label_encoder': None, 'base_score': None, 'booster': None, 'callbacks': None, 'colsample_bylevel': None, 'colsample_bynode': None, 'colsample_bytree': 0.7430369619260818, 'early_stopping_rounds': None, 'enable_categorical': False, 'eval_metric': None, 'feature_types': None, 'gamma': 9.587024074078462, 'gpu_id': None, 'grow_policy': None, 'importance_type': None, 'interaction_constraints': None, 'learning_rate': 0.03513969967704736, 'max_bin': None, 'max_cat_threshold': None, 'max_cat_to_onehot': None, 'max_delta_step': None, 'max_depth': 9, 'max_leaves': None, 'min_child_weight': 30.408763097981, 'missing': nan, 'monotone_constraints': None, 'n_estimators': 422, 'n_jobs': None, 'num_parallel_tree': None, 'predictor': None, 'random_state': 2738, 'reg_alpha': None, 'reg_lambda': None, 'sampling_method': None, 'scale_pos_weight': 1, 'subsample': 0.9360255284927764, 'tree_method': None, 'validate_parameters': None, 'verbosity': None, 'num_class': 1}
+ensemble:
+coefs: [[0.26018705 2.67069293 2.05522935 0.61403527]], intercept: [-2.6566445]
