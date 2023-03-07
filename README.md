@@ -21,7 +21,7 @@ described in a requirements.txt file
 
 # Usage
 After updating the csv path to the data, just run:
-`python main.py`
+`python main.py` for the creation of the search space, creation of z-table and training. after it's done, run `python inference.py`. In the end, run `python calc_shap.py'
 
 # Licens
 MIT License
